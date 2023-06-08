@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tv SYSTEM "xmltv.dtd">
 
 <tv source-info-url="http://www.schedulesdirect.org/" source-info-name="Schedules Direct" generator-info-name="XMLTV/$Id: tv_grab_na_dd.in,v 1.70 2008/03/03 15:21:41 rmeden Exp $" generator-info-url="http://www.xmltv.org/">
   {{range .channels}}
   <channel id="{{ .ID }}">
     <display-name>{{ .Name }}</display-name>
+    <icon src="https://ci4.googleusercontent.com/proxy/vXGcZFsEg1D9ffg7AdzaktofYoqQ7axiwt6wKgh5KEdek4o1fgaoUx_fRffapb1t-KUUfy9jI5ZLWwqkxS8ZMWnuxJ19pZcPlWWwH9AmEUfqglqna5fPxOSBLcg=s0-d-e1-ft#https://bethany.team/app/default/assets/photo_galleries/Logo-IC0N-BLK.png" />
   </channel>
   {{end}}
   {{range .channels}}
