@@ -31,21 +31,40 @@ func XMLTV(c *gin.Context) {
 			ChannelSimplified{
 				ID:   index + 1,
 				Name: channel.Name,
-			},
+		},
 		)
 	}
 
 	var programmes []Programme
 	var now = time.Now()
 
-	for i := 0; i < 24; i++ {
-		var start = time.Date(now.Year(), now.Month(), now.Day(), i+1, 0, 0, 0, now.Location())
-		var end = time.Date(now.Year(), now.Month(), now.Day(), i+1, 59, 59, 999, now.Location())
-		var dateTimeStart = start.Format("20060102150405 -0700")
+	for i := 0; i < 4; i++ {
+                var nextSunday = now.AddDate(0, 0, 7-int(now.Weekday()))
 
-		var dateTimeEnd = end.Format("20060102150405 -0700")
+		if now.Weekday() == time.Sunday {
+			var start = time.Date(now.Year(), now.Month(), now.Day(), 8, 0, 0, 0, now.Location())
+			var end = time.Date(now.Year(), now.Month(), now.Day(), 8, 90, 0, 0, now.Location())
 
-		var hourStr = start.Format("3PM")
+			var dateTimeStart = start.Format("20060102150405 -0700")
+			var dateTimeEnd = end.Format("20060102150405 -0700")
+			var hourStr = start.Format("Jan-2-2006 3PM")
+
+                programmes = append(
+                        programmes,
+                        Programme{
+                                HourStr:       hourStr,
+                                DateTimeStart: dateTimeStart,
+                                DateTimeEnd:   dateTimeEnd,
+                        },
+                )
+		} else {
+			var start = time.Date(now.Year(), nextSunday.Month(), nextSunday.Day(), 8, 0, 0, 0, now.Location())
+			var end = time.Date(now.Year(), nextSunday.Month(), nextSunday.Day(), 8, 90, 0, 0, now.Location())
+
+			var dateTimeStart = start.Format("20060102150405 -0700")
+			var dateTimeEnd = end.Format("20060102150405 -0700")
+
+			var hourStr = start.Format("Jan-2-2006 3PM")
 
 		programmes = append(
 			programmes,
@@ -55,6 +74,8 @@ func XMLTV(c *gin.Context) {
 				DateTimeEnd:   dateTimeEnd,
 			},
 		)
+		}
+               now = nextSunday
 	}
 
 	t := template.Must(template.New("xmltv.tmpl").ParseFiles("templates/xmltv.tmpl"))
