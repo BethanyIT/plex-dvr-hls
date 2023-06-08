@@ -38,7 +38,7 @@ func Discover(c *gin.Context) {
 			FriendlyName:    config.Cfg.Name,
 			ModelNumber:     "HDTC-2US",
 			FirmwareName:    "hdhomeruntc_atsc",
-			TunerCount:      len(config.Channels) * 3,
+			TunerCount:      len(config.Channels) * 12,
 			FirmwareVersion: "20150826",
 			DeviceID:        fmt.Sprintf("%d", deviceID),
 			DeviceAuth:      "test1234",
